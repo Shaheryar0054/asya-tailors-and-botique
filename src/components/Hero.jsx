@@ -28,7 +28,7 @@ export default function Hero() {
       overflow: 'hidden',
       background: '#0a140c', // Fallback background color
     }}>
-      
+
       {/* Background Images Layer */}
       {images.map((img, index) => (
         <img
@@ -77,7 +77,7 @@ export default function Hero() {
           color: 'white', marginBottom: '12px',
           letterSpacing: '-0.01em',
         }}>
-          OEM Garment<br />Manufacturing
+          Custom Garment Manufacturing<br />for Fashion Brands
         </h1>
 
         {/* Italic sub-line */}
@@ -96,8 +96,7 @@ export default function Hero() {
           lineHeight: '1.75', maxWidth: '480px',
           marginBottom: '36px', fontWeight: 300,
         }}>
-          Helping fashion brands bring their collections to life —
-          from first sample to bulk production.
+          We help fashion brands, startups and businesses transform their ideas into premium garments through sampling, pattern development and reliable bulk production.
         </p>
 
         {/* CTA Buttons */}
@@ -109,8 +108,8 @@ export default function Hero() {
             padding: '13px 28px', textDecoration: 'none',
             display: 'inline-block', transition: 'background 0.25s',
           }}
-          onMouseEnter={e => e.currentTarget.style.background = 'var(--green2)'}
-          onMouseLeave={e => e.currentTarget.style.background = 'var(--green)'}
+            onMouseEnter={e => e.currentTarget.style.background = 'var(--green2)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'var(--green)'}
           >GET A QUOTE</a>
 
           <a href="#services" style={{
@@ -121,8 +120,8 @@ export default function Hero() {
             display: 'inline-flex', alignItems: 'center', gap: '8px',
             transition: 'all 0.25s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = 'white'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.6)'; e.currentTarget.style.background = 'transparent'; }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'white'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.6)'; e.currentTarget.style.background = 'transparent'; }}
           >OUR SERVICES <span>›</span></a>
         </div>
       </div>

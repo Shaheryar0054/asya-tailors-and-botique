@@ -31,7 +31,7 @@ export default function Services() {
               fontFamily: 'var(--sans)', fontSize: '11px', fontWeight: 700,
               letterSpacing: '0.18em', color: 'var(--green)',
               textTransform: 'uppercase', marginBottom: '12px',
-            }}>OUR SERVICES</div>
+            }}>EXPLORE OUR SERVICES</div>
 
             <h2 style={{
               fontFamily: 'var(--serif)',
