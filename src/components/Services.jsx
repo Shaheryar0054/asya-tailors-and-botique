@@ -1,10 +1,20 @@
+// Apni sabhi images ko yahan import karein (paths apne mutabiq check kar lein)
+import womensWearImg from '../assets/womens-wear.jpg';
+import mensWearImg from '../assets/mens-wear.jpg';
+import medicalScrubsImg from '../assets/medical-scrubs.jpg';
+import schoolUniformsImg from '../assets/school-uniforms.jpg';
+// Abayas ke liye nai image import karein
+import abayasImg from '../assets/womens-abayas.jpg'; // Farzi naam, apni image ka path dein
+import homeTextilesImg from '../assets/home-textiles.jpg';
+
 const SERVICES = [
-  { title: "WOMEN'S WEAR", sub: 'Elegant & Modest Styles', color: '#8B6D5C', icon: '👗' },
-  { title: "MEN'S WEAR",   sub: 'Shirts, Trousers & More', color: '#4A6B7A', icon: '👔' },
-  { title: 'MEDICAL SCRUBS', sub: 'High Quality & Comfortable', color: '#3D6B5C', icon: '🩺' },
-  { title: 'SCHOOL UNIFORMS', sub: 'Durable & Smart', color: '#2D4A6B', icon: '🎒' },
-  { title: 'HOODIES & SWEATSHIRTS', sub: 'Premium & Customizable', color: '#4A3D5C', icon: '🧥' },
-  { title: 'HOME TEXTILES', sub: 'Quality for Every Home', color: '#6B5C3D', icon: '🛏️' },
+  { title: "WOMEN'S WEAR", sub: 'Elegant & Modest Styles', image: womensWearImg },
+  { title: "MEN'S WEAR",   sub: 'Shirts, Trousers & More', image: mensWearImg },
+  { title: 'MEDICAL SCRUBS', sub: 'High Quality & Comfortable', image: medicalScrubsImg },
+  { title: 'SCHOOL UNIFORMS', sub: 'Durable & Smart', image: schoolUniformsImg },
+  // Hoodies hata kar nai women's category add ki gai hai
+  { title: "ABAYAS & MODEST WEAR", sub: 'Premium Quality & Customizable', image: abayasImg },
+  { title: 'HOME TEXTILES', sub: 'Quality for Every Home', image: homeTextilesImg },
 ]
 
 export default function Services() {
@@ -15,7 +25,7 @@ export default function Services() {
         {/* Left col header + right grid */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '48px', alignItems: 'start' }} className="svc-wrap">
 
-          {/* Left */}
+          {/* Left Side */}
           <div>
             <div style={{
               fontFamily: 'var(--sans)', fontSize: '11px', fontWeight: 700,
@@ -57,28 +67,46 @@ export default function Services() {
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '12px',
           }} className="svc-grid">
-            {SERVICES.map(({ title, sub, color, icon }) => (
+            {SERVICES.map(({ title, sub, image }) => (
               <div key={title} style={{
                 position: 'relative', aspectRatio: '1/1.1',
-                background: color, overflow: 'hidden',
+                overflow: 'hidden',
                 cursor: 'pointer',
                 transition: 'transform 0.3s ease',
               }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-4px)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                // Image zoom effect on hover
+                const img = e.currentTarget.querySelector('.svc-bg-img');
+                if(img) img.style.transform = 'scale(1.08)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                const img = e.currentTarget.querySelector('.svc-bg-img');
+                if(img) img.style.transform = 'scale(1)';
+              }}
               >
-                {/* Background icon */}
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '72px', opacity: 0.18,
-                }}>{icon}</div>
+                {/* Background Image - Clean and Original */}
+                <img 
+                  src={image} 
+                  alt={title}
+                  className="svc-bg-img"
+                  style={{
+                    position: 'absolute', inset: 0,
+                    width: '100%', height: '100%',
+                    objectFit: 'cover', objectPosition: 'center',
+                    zIndex: 0,
+                    // Opacity remove kar di gai hai taake image original nazar aaye
+                    transition: 'transform 0.4s ease',
+                  }}
+                />
 
-                {/* Bottom label */}
+                {/* Bottom label - Gradient still here for text readability */}
                 <div style={{
                   position: 'absolute', bottom: 0, left: 0, right: 0,
-                  background: 'linear-gradient(transparent, rgba(0,0,0,0.75))',
-                  padding: '28px 14px 14px',
+                  background: 'linear-gradient(transparent, rgba(0,0,0,0.85))',
+                  padding: '40px 14px 14px',
+                  zIndex: 1,
                 }}>
                   <div style={{
                     fontFamily: 'var(--sans)', fontSize: '11px', fontWeight: 700,

@@ -1,6 +1,23 @@
-import heroBg from '../assets/hero-bg.jpg'
+import { useState, useEffect } from 'react';
+// Apni baqi 2 images yahan import karein
+import heroBg1 from '../assets/hero-bg.jpg'; // Farzi naam, apne mutabiq change karein
+import heroBg2 from '../assets/hero-bg2.jpg'; // Farzi naam, apne mutabiq change karein
+import heroBg3 from '../assets/hero-bg3.jpg'; // Farzi naam, apne mutabiq change karein
 
 export default function Hero() {
+  // 3 Images ka array
+  const images = [heroBg1, heroBg2, heroBg3];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Auto-slide effect (Har 5 seconds baad image change hogi)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000); // 5000ms = 5 seconds
+
+    return () => clearInterval(timer);
+  }, [images.length]);
+
   return (
     <section id="home" style={{
       position: 'relative',
@@ -9,14 +26,25 @@ export default function Hero() {
       maxHeight: '700px',
       display: 'flex', alignItems: 'center',
       overflow: 'hidden',
+      background: '#0a140c', // Fallback background color
     }}>
-      {/* Background image */}
-      <img src={heroBg} alt="Asya Tailors Factory" style={{
-        position: 'absolute', inset: 0,
-        width: '100%', height: '100%',
-        objectFit: 'cover', objectPosition: 'center',
-        zIndex: 0,
-      }} />
+      
+      {/* Background Images Layer */}
+      {images.map((img, index) => (
+        <img
+          key={index}
+          src={img}
+          alt={`Asya Tailors Factory ${index + 1}`}
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: 'center',
+            zIndex: 0,
+            opacity: currentIndex === index ? 1 : 0, // Sirf active image nazar aaye
+            transition: 'opacity 1.2s ease-in-out', // Smooth crossfade animation
+          }}
+        />
+      ))}
 
       {/* Dark gradient overlay — left heavier so text reads well */}
       <div style={{
@@ -97,6 +125,26 @@ export default function Hero() {
           onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.6)'; e.currentTarget.style.background = 'transparent'; }}
           >OUR SERVICES <span>›</span></a>
         </div>
+      </div>
+
+      {/* Slider Indicators / Dots (Optional: Choti dots slider k neechay) */}
+      <div style={{
+        position: 'absolute', bottom: '24px', right: '80px', zIndex: 2,
+        display: 'flex', gap: '8px'
+      }}>
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            style={{
+              width: '8px', height: '8px', borderRadius: '50%',
+              border: 'none', cursor: 'pointer',
+              background: currentIndex === index ? 'var(--gold2)' : 'rgba(255,255,255,0.4)',
+              transition: 'background 0.3s',
+              padding: 0,
+            }}
+          />
+        ))}
       </div>
 
       <style>{`

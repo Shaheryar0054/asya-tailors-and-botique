@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
+// Aapki local video sahi tarike se import ho rahi hai
+import factoryVideo from '../assets/factory-video.mp4'; 
 
 const STATS = [
   { end: 10,   suffix: '+',    label: 'Years of Experience' },
@@ -34,22 +36,6 @@ function useCountUp(end, duration = 1800, start = false) {
   return count
 }
 
-function StatCard({ end, suffix, label, start }) {
-  const count = useCountUp(end, 1800, start)
-  return (
-    <div style={{ textAlign: 'center', padding: '20px 16px' }}>
-      <div style={{
-        fontFamily: 'var(--serif)', fontSize: '36px', fontWeight: 700,
-        color: 'var(--green)', lineHeight: 1,
-      }}>{count}{suffix}</div>
-      <div style={{
-        fontFamily: 'var(--sans)', fontSize: '11px',
-        color: 'var(--text3)', marginTop: '6px', lineHeight: 1.3,
-      }}>{label}</div>
-    </div>
-  )
-}
-
 export default function WhyUs() {
   const [started, setStarted] = useState(false)
   const ref = useRef(null)
@@ -65,7 +51,7 @@ export default function WhyUs() {
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }} className="why-grid">
 
-          {/* Left */}
+          {/* Left Side Content */}
           <div>
             <div style={{
               fontFamily: 'var(--sans)', fontSize: '11px', fontWeight: 700,
@@ -119,37 +105,41 @@ export default function WhyUs() {
             >ABOUT US</a>
           </div>
 
-          {/* Right — video placeholder + stats */}
+          {/* Right — Active Video + stats */}
           <div>
-            {/* Video/image placeholder */}
+            {/* Real Autoplay & Loop Video */}
             <div style={{
               width: '100%', aspectRatio: '16/10',
-              background: 'linear-gradient(135deg, #2D4A35, #1E3225)',
               position: 'relative', overflow: 'hidden',
               marginBottom: '20px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              border: '1px solid var(--border)'
             }}>
-              <div style={{
-                width: '64px', height: '64px', borderRadius: '50%',
-                background: 'rgba(255,255,255,0.15)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                cursor: 'pointer', transition: 'background 0.2s',
-              }}>
-                <span style={{ color: 'white', fontSize: '24px', marginLeft: '4px' }}>▶</span>
-              </div>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{
+                  width: '100%', height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
+              >
+                {/* Yahan humne aapki original video ka variable 'factoryVideo' pass kar diya hai */}
+                <source src={factoryVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+
+              {/* ASYA Label overlay */}
               <div style={{
                 position: 'absolute', top: '12px', left: '12px',
                 background: 'rgba(250,248,243,0.9)',
                 padding: '8px 12px',
+                zIndex: 1,
               }}>
                 <div style={{ fontFamily: 'var(--serif)', fontSize: '12px', fontWeight: 700, color: 'var(--green)' }}>ASYA</div>
                 <div style={{ fontSize: '8px', color: 'var(--text3)', letterSpacing: '0.1em' }}>TAILORS & BOUTIQUE</div>
               </div>
-              <div style={{
-                position: 'absolute', bottom: '12px', right: '12px',
-                fontFamily: 'var(--sans)', fontSize: '10px',
-                color: 'rgba(255,255,255,0.6)',
-              }}>Add factory video here</div>
             </div>
 
             {/* Stats grid */}

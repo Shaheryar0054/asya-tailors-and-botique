@@ -4,9 +4,9 @@ const LINKS = [
   { label: 'HOME', href: '#home' },
   { label: 'ABOUT US', href: '#about' },
   { label: 'SERVICES', href: '#services' },
-  { label: 'PRODUCTS', href: '#products' },
+  // { label: 'PRODUCTS', href: '#products' },
   { label: 'OUR PROCESS', href: '#process' },
-  { label: 'GALLERY', href: '#gallery' },
+  // { label: 'GALLERY', href: '#gallery' },
   { label: 'CONTACT US', href: '#contact' },
 ]
 

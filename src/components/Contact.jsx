@@ -1,16 +1,34 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 export default function Contact() {
   const [form, setForm] = useState({
     fullName: '', company: '', country: '',
     email: '', product: '', quantity: '', message: '',
   })
+  const [file, setFile] = useState(null) // Selected file track karne ke liye
   const [sent, setSent] = useState(false)
+  
+  // File input ko reference karne ke liye ref
+  const fileInputRef = useRef(null)
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
+  // File change handler
+  const handleFileChange = e => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0])
+    }
+  }
+
+  // Upload area par click hone se hidden file input trigger hoga
+  const triggerFileInput = () => {
+    fileInputRef.current.click()
+  }
+
   const handleSubmit = e => {
     e.preventDefault()
+    
+    // Message text format for WhatsApp
     const msg =
       `*New Quote - Asya Tailors*%0A%0A` +
       `*Name:* ${form.fullName}%0A` +
@@ -19,7 +37,9 @@ export default function Contact() {
       `*Email:* ${form.email}%0A` +
       `*Product:* ${form.product}%0A` +
       `*Quantity:* ${form.quantity} pcs%0A` +
+      `*Design Attached:* ${file ? file.name : 'No'}%0A` + // File ka naam msg mein jayega
       `*Message:* ${form.message}`
+      
     window.open(`https://wa.me/923150505488?text=${msg}`, '_blank')
     setSent(true)
   }
@@ -112,7 +132,7 @@ export default function Contact() {
                     onBlur={e => e.target.style.borderColor = 'var(--border)'}
                   >
                     <option value="">Product / Category *</option>
-                    {["Women's Wear", "Men's Wear", "Medical Scrubs", "School Uniforms", "Hoodies & Sweatshirts", "Home Textiles", "Custom"].map(s => (
+                    {["Women's Wear", "Men's Wear", "Medical Scrubs", "School Uniforms", "Home Textiles", "Custom"].map(s => (
                       <option key={s} value={s}>{s}</option>
                     ))}
                   </select>
@@ -134,13 +154,31 @@ export default function Contact() {
                   onBlur={e => e.target.style.borderColor = 'var(--border)'}
                 />
 
-                <div style={{
-                  border: '2px dashed var(--border)', padding: '14px',
-                  textAlign: 'center', marginBottom: '16px',
-                  fontFamily: 'var(--sans)', fontSize: '12px', color: 'var(--text3)',
-                  cursor: 'pointer',
-                }}>
-                  ☁️ &nbsp; UPLOAD DESIGN / FILE (Optional)
+                {/* Hidden File Input */}
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  onChange={handleFileChange} 
+                  accept="image/*,.pdf" // Only images or PDFs
+                  style={{ display: 'none' }} 
+                />
+
+                {/* Clickable UI Box for Upload */}
+                <div 
+                  onClick={triggerFileInput}
+                  style={{
+                    border: file ? '2px dashed var(--green)' : '2px dashed var(--border)', 
+                    padding: '14px',
+                    textAlign: 'center', marginBottom: '16px',
+                    fontFamily: 'var(--sans)', fontSize: '12px', 
+                    color: file ? 'var(--green)' : 'var(--text3)',
+                    fontWeight: file ? '600' : 'normal',
+                    cursor: 'pointer',
+                    background: file ? '#E8F5E9' : 'transparent',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  {file ? `📎 ATTACHED: ${file.name}` : '☁️   UPLOAD DESIGN / FILE (Optional)'}
                 </div>
 
                 <button type="submit" style={{
